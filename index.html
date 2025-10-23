@@ -9,13 +9,11 @@
 <body>
     <div class="container">
         <header>
-            <h1>🏃‍♂️ Jump Rope Workout Generator</h1>
+            <h1>Jump Rope Workout Generator</h1>
             <p class="subtitle">Get Your Custom Workout in Seconds!</p>
         </header>
-        
         <div class="generator-section">
             <h2>Customize Your Workout</h2>
-            
             <div class="input-group">
                 <label for="fitness-level">Fitness Level:</label>
                 <select id="fitness-level">
@@ -24,12 +22,10 @@
                     <option value="advanced">Advanced</option>
                 </select>
             </div>
-            
             <div class="input-group">
                 <label for="duration">Workout Duration (minutes):</label>
                 <input type="number" id="duration" min="5" max="60" value="15">
             </div>
-            
             <div class="input-group">
                 <label for="focus">Focus Area:</label>
                 <select id="focus">
@@ -38,7 +34,6 @@
                     <option value="mixed">Mixed</option>
                 </select>
             </div>
-
             <div class="input-group">
                 <label for="rope-type">Jump Rope Type:</label>
                 <select id="rope-type">
@@ -52,7 +47,6 @@
                     <option value="Cordless Jump Rope">Cordless Jump Rope</option>
                 </select>
             </div>
-
             <div class="input-group">
                 <label for="workout-type">Workout Type:</label>
                 <select id="workout-type">
@@ -61,85 +55,79 @@
                     <option value="gym">Jump Rope + Equipment (Gym)</option>
                 </select>
             </div>
-
             <div class="input-group">
                 <label for="rounds">Number of Rounds/Sets:</label>
                 <input type="number" id="rounds" min="1" max="10" value="2">
             </div>
-
             <div class="input-group">
                 <label for="rest-time">Rest Time (seconds):</label>
                 <input type="number" id="rest-time" min="10" max="120" value="30">
             </div>
-            
-            <button id="generate-btn" onclick="generateWorkout()">Generate My Workout! 💪</button>
+            <button id="generate-btn" onclick="generateWorkout()">Generate My Workout!</button>
         </div>
-        
         <div id="workout-display" class="workout-display" style="display: none;">
             <h2>Your Personalized Workout</h2>
             <div id="workout-content"></div>
             <div class="action-buttons">
-                <button onclick="startTimer()" class="action-btn timer-btn">▶️ Start Workout</button>
-                <button onclick="saveWorkout()" class="action-btn save-btn">💾 Save Workout</button>
-                <button onclick="printWorkout()" class="action-btn print-btn">🖨️ Print</button>
-                <button onclick="generateWorkout()" class="regenerate-btn">Generate Another 🔄</button>
+                <button onclick="startTimer()" class="action-btn timer-btn">Start Workout</button>
+                <button onclick="saveWorkout()" class="action-btn save-btn">Save Workout</button>
+                <button onclick="printWorkout()" class="action-btn print-btn">Print</button>
+                <button onclick="generateWorkout()" class="regenerate-btn">Generate Another</button>
             </div>
         </div>
-        
         <!-- Replace Modal -->
         <div id="replace-modal" class="modal" style="display:none;">
             <div class="modal-content" id="replace-modal-content">
                 <span class="close-btn" onclick="closeReplaceModal()">&times;</span>
                 <h2>Choose a Replacement Exercise</h2>
                 <select id="replacement-select"></select>
-                <button onclick="confirmReplaceExercise()">✅ Replace</button>
+                <button onclick="confirmReplaceExercise()">Replace</button>
             </div>
         </div>
-
-        <!-- Timer Modal -->
+        <!-- Timer Modal (BIG, responsive circular timer) -->
         <div id="timer-modal" class="modal" style="display: none;">
             <div class="modal-content timer-container">
                 <span class="close-btn" onclick="closeTimer()">&times;</span>
-                <h2 id="timer-title">Workout Timer</h2>
+                <h2 id="timer-title" class="timer-title"></h2>
                 <div class="timer-display">
                     <div class="current-exercise">
-                        <h3 id="timer-exercise-name">Get Ready!</h3>
-                        <p id="timer-exercise-intensity"></p>
+                        <h3 id="timer-exercise-name"></h3>
+                        <div id="timer-exercise-intensity"></div>
                     </div>
-                    <div class="countdown">
-                        <span id="timer-countdown">00:00</span>
+                    <div class="circle-timer-wrap">
+                        <svg id="timer-svg" viewBox="0 0 160 160" class="timer-svg">
+                            <circle cx="80" cy="80" r="68" fill="none" stroke="#E0E0E0" stroke-width="10"/>
+                            <circle id="progress-circle" cx="80" cy="80" r="68" fill="none" stroke="#FF9800" stroke-width="10" stroke-linecap="round"/>
+                        </svg>
+                        <div class="timer-count-center">
+                            <span id="timer-countdown" class="timer-countdown">00:00</span>
+                        </div>
                     </div>
                     <div class="timer-progress">
-                        <p>Exercise <span id="current-exercise-num">0</span> of <span id="total-exercises">0</span></p>
-                        <div class="progress-bar">
-                            <div id="progress-fill" class="progress-fill"></div>
-                        </div>
+                        <span id="current-exercise-num">0</span> / <span id="total-exercises">0</span>
                     </div>
                 </div>
                 <div id="timer-control-group" class="timer-controls">
-                    <button onclick="pauseTimer()" class="control-btn">⏸️ Pause</button>
-                    <button onclick="resumeTimer()" class="control-btn">▶️ Resume</button>
-                    <button onclick="skipExercise()" class="control-btn">⏭️ Skip</button>
+                    <button onclick="pauseTimer()" class="control-btn">Pause</button>
+                    <button onclick="resumeTimer()" class="control-btn">Resume</button>
+                    <button onclick="skipExercise()" class="control-btn skip-btn">Skip</button>
                 </div>
             </div>
         </div>
-        
         <!-- Saved Workouts Section -->
         <div id="saved-workouts-section" style="display: none;">
-            <h2>📚 Saved Workouts</h2>
+            <h2>Saved Workouts</h2>
             <div id="saved-workouts-list"></div>
         </div>
-        
         <!-- Workout History Section -->
         <div id="history-section" style="display: none;">
-            <h2>📊 Workout History</h2>
+            <h2>Workout History</h2>
             <div id="history-list"></div>
             <button onclick="clearHistory()" class="clear-history-btn">Clear History</button>
         </div>
     </div>
-    
     <footer>
-        <p>💪 Stay consistent, stay strong!</p>
+        <p>Stay consistent, stay strong!</p>
     </footer>
     <script src="script.js"></script>
 </body>
