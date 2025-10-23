@@ -30,8 +30,6 @@ body {
     align-items: stretch;
 }
 
-/* General styles as before... */
-
 h1 {
     font-size: 2.1rem;
     font-weight: 800;
@@ -162,6 +160,8 @@ button:hover, input[type="submit"]:hover {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    max-height: 97vh;        /* Ensures buttons visible even on short screens */
+    overflow-y: auto;
 }
 .close-btn {
     position: absolute;
@@ -170,7 +170,6 @@ button:hover, input[type="submit"]:hover {
     font-size: 2rem;
     z-index: 3;
 }
-
 .timer-title {
     margin-bottom: 18px;
     margin-top: 10px;
@@ -194,10 +193,13 @@ button:hover, input[type="submit"]:hover {
     margin-bottom: 0.6rem;
     text-align: center;
 }
-/* --- BIGGER CIRCULAR TIMER --- */
+
+/* -- CIRCULAR TIMER & CENTERING -- */
 .circle-timer-wrap {
-    width: 160px;
-    height: 160px;
+    width: 92vw;
+    max-width: 340px;
+    height: 92vw;
+    max-height: 340px;
     margin: 24px auto 0 auto;
     display: flex;
     align-items: center;
@@ -205,12 +207,15 @@ button:hover, input[type="submit"]:hover {
     position: relative;
 }
 .timer-svg {
-    width: 160px;
-    height: 160px;
+    width: 92vw;
+    max-width: 340px;
+    height: 92vw;
+    max-height: 340px;
     transform: rotate(-90deg);
     position: absolute;
     top: 0; left: 0;
     z-index: 2;
+    min-width: 140px; min-height: 140px;
 }
 #progress-circle {
     stroke-dasharray: 427.256; /* 2 * pi * 68 */
@@ -218,23 +223,26 @@ button:hover, input[type="submit"]:hover {
     transition: stroke-dashoffset 0.5s linear;
 }
 .timer-count-center {
-    width: 160px;
-    height: 160px;
+    width: 92vw;
+    max-width: 340px;
+    height: 92vw;
+    max-height: 340px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 0; left: 0;
+    inset: 0;
     z-index: 3;
+    pointer-events: none;  /* keeps clicks on the ring, not the text */
 }
 .timer-countdown {
-    font-size: 2.5rem;
+    font-size: min(10vw, 2.7rem);
     font-weight: 800;
     color: #14213D;
     text-align: center;
     letter-spacing: 1.7px;
-    width: 140px;
     background: none;
+    width: 100%;
 }
 .timer-progress {
     margin: 0 auto 10px auto;
@@ -243,27 +251,30 @@ button:hover, input[type="submit"]:hover {
     color: #36454F;
     font-weight: 600;
 }
+
+/* --- TIMER BUTTONS: NICER MOBILE LAYOUT --- */
 .timer-controls {
-    margin-top: 8px;
+    margin-top: 24px;
+    margin-bottom: 12px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 18px;
     align-items: center;
 }
 .timer-controls .control-btn {
     background: #FF9800;
     color: #fff;
     border: none;
-    border-radius: 10px;
-    font-size: 1.05rem;
+    border-radius: 12px;
+    font-size: 1.19rem;
     font-weight: 700;
-    padding: 12px 0;
-    width: 190px;
-    margin-top: 0;
-    margin-bottom: 0;
+    padding: 18px 0;
+    width: 85vw;
+    max-width: 400px;
+    margin: 0;
     box-shadow: 0 2px 8px rgba(255,152,0,0.09);
-    transition: background 0.2s;
+    transition: background 0.16s;
 }
 .timer-controls .skip-btn {
     background: #4AB0FF;
@@ -276,6 +287,7 @@ button:hover, input[type="submit"]:hover {
     background: #14213D;
     color: #4AB0FF;
 }
+
 .workout-step {
     margin-bottom: 18px;
     padding-bottom: 8px;
@@ -339,9 +351,10 @@ button:hover, input[type="submit"]:hover {
 }
 @media (max-width: 500px) {
     .modal-content.timer-container {
-        min-width: 95vw;
+        min-width: 97vw;
         max-width: 99vw;
-        padding: 15px 1vw 13px 1vw;
+        padding: 7vw 1.5vw 8vw 1.5vw;
+        box-sizing: border-box;
     }
     .circle-timer-wrap, .timer-svg {
         width: 92vw;
@@ -362,7 +375,7 @@ button:hover, input[type="submit"]:hover {
     .timer-controls .control-btn {
         width: 99vw;
         max-width: 99vw;
-        font-size: 1rem;
+        font-size: 1.08rem;
         margin-left: 0;
         margin-right: 0;
     }

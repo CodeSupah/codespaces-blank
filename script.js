@@ -335,7 +335,7 @@ function startExercise() {
 function updateCircleProgress(timeLeft, totalTime) {
     const circle = document.getElementById('progress-circle');
     if (!circle) return;
-    const radius = 68; // MATCH THE NEW RADUIS
+    const radius = 68;
     const circumference = 2 * Math.PI * radius;
     const percent = (totalTime === 0) ? 0 : (timeLeft / totalTime);
     const offset = circumference * (1 - percent);
@@ -346,7 +346,7 @@ function updateCircleProgress(timeLeft, totalTime) {
 function updateTimerDisplay() {
     const minutes = Math.floor(remainingTime / 60);
     const seconds = remainingTime % 60;
-    document.getElementById('timer-countdown').textContent = 
+    document.getElementById('timer-countdown').textContent =
         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
