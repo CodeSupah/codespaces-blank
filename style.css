@@ -1,7 +1,5 @@
-/* Import a modern font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -10,539 +8,386 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #F2F6FA;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 32px;
     color: #333;
 }
 
 .container {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    max-width: 600px;
+    background: #ffffff;
+    border-radius: 32px;
+    box-shadow: 0 8px 48px rgba(32, 42, 37, 0.15);
+    max-width: 430px;
     width: 100%;
-    padding: 40px;
-    animation: fadeIn 0.5s ease-in;
-    margin-bottom: 20px;
+    padding: 52px 34px 42px 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* General styles as before... */
 
-/* Header styles */
-header {
+h1 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: #14213D;
+    letter-spacing: 0.8px;
     text-align: center;
-    margin-bottom: 40px;
 }
-
-header h1 {
-    font-size: 2.5rem;
+h2, h3 {
+    color: #14213D;
     font-weight: 700;
-    color: #667eea;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
 }
-
-.subtitle {
-    font-size: 1.1rem;
-    color: #666;
-    font-weight: 300;
-}
-
-/* Generator section */
-.generator-section {
-    margin-bottom: 30px;
-}
-
-.generator-section h2 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 25px;
+p {
+    color: #444;
+    font-size: 1.04rem;
+    margin-bottom: 20px;
     text-align: center;
 }
 
-/* Input groups */
+label {
+    font-weight: 600;
+    color: #14213D;
+    margin-bottom: 6px;
+    margin-top: 11px;
+    font-size: 1rem;
+}
+
 .input-group {
-    margin-bottom: 25px;
+    margin-bottom: 13px;
 }
 
-.input-group label {
-    display: block;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 8px;
+select, input[type="text"], input[type="number"] {
+    background: #F2F6FA;
+    border: 2px solid #4AB0FF;
+    border-radius: 14px;
+    padding: 12px 14px;
     font-size: 1rem;
-}
-
-.input-group select,
-.input-group input[type="number"] {
+    margin-bottom: 6px;
+    color: #222;
+    font-weight: 500;
+    transition: border 0.2s, background 0.2s;
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
-    background: white;
 }
-
-.input-group select:focus,
-.input-group input[type="number"]:focus {
+select:focus, input:focus {
+    border-color: #FF9800;
+    background: #fff;
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-/* Buttons */
-#generate-btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-    margin-top: 10px;
-}
-
-#generate-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-}
-
-#generate-btn:active {
-    transform: translateY(0);
-}
-
-/* Workout display */
-.workout-display {
-    animation: slideIn 0.5s ease-out;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.workout-display h2 {
-    font-size: 1.8rem;
-    color: #667eea;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-#workout-content {
-    background: #f8f9ff;
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-}
-
-.workout-item {
-    background: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border-left: 4px solid #667eea;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.workout-item h3 {
-    color: #667eea;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-}
-
-.workout-item p {
-    color: #666;
-    font-size: 0.95rem;
-    margin: 5px 0;
-}
-
-.rest-item {
-    background: #f0f0f0 !important;
-    border-left-color: #999 !important;
-}
-
-.rest-item h3 {
-    color: #666 !important;
-}
-
-.workout-summary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.workout-summary h3 {
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-}
-
-/* Action Buttons */
-.action-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.action-btn {
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-}
-
-.timer-btn {
-    background: #4CAF50;
-    color: white;
-}
-
-.timer-btn:hover {
-    background: #45a049;
-    transform: translateY(-2px);
-}
-
-.save-btn {
-    background: #2196F3;
-    color: white;
-}
-
-.save-btn:hover {
-    background: #0b7dda;
-    transform: translateY(-2px);
-}
-
-.print-btn {
+button, input[type="submit"] {
     background: #FF9800;
-    color: white;
-}
-
-.print-btn:hover {
-    background: #e68900;
-    transform: translateY(-2px);
-}
-
-.regenerate-btn {
-    grid-column: 1 / -1;
-    padding: 12px;
-    background: white;
-    color: #667eea;
-    border: 2px solid #667eea;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 19px 0;
+    margin-top: 22px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
+    transition: background 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 14px rgba(255, 152, 0, 0.15);
+    width: 100%;
+    text-align: center;
 }
-
-.regenerate-btn:hover {
-    background: #667eea;
-    color: white;
-    transform: translateY(-2px);
+button:hover, input[type="submit"]:hover {
+    background: #14213D;
+    color: #FF9800;
 }
-
-/* Modal Styles */
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.action-btn, .regenerate-btn, .save-btn, .print-btn, .timer-btn {
+    background: #4AB0FF;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 1.04rem;
+    font-weight: 600;
+    width: 100%;
+    margin-bottom: 4px;
+    box-shadow: 0 2px 8px rgba(74, 176, 255, 0.10);
+    transition: background 0.2s;
+}
+.action-btn:hover, .regenerate-btn:hover, .save-btn:hover, .print-btn:hover, .timer-btn:hover {
+    background: #FF9800;
+    color: #fff;
+}
+.clear-history-btn {
+    background: #FF5252;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 0;
+    font-weight: 700;
+    width: 100%;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+.clear-history-btn:hover {
+    background: #14213D;
+    color: #FF5252;
+}
 .modal {
     position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(20, 33, 61, 0.16);
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.3s ease-in;
+    z-index: 100;
 }
-
 .modal-content {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 90%;
+    background: #fff;
+    border-radius: 18px;
+    padding: 38px 36px 24px 36px;
+    box-shadow: 0 8px 38px rgba(32,42,37,0.24);
+    min-width: 270px;
+    max-width: 95vw;
     position: relative;
-    animation: slideIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
-
 .close-btn {
     position: absolute;
-    right: 20px;
-    top: 15px;
+    top: 18px;
+    right: 26px;
     font-size: 2rem;
-    font-weight: bold;
-    color: #999;
-    cursor: pointer;
-    transition: color 0.3s;
+    z-index: 3;
 }
 
-.close-btn:hover {
-    color: #333;
-}
-
-/* Timer Styles */
-.timer-container h2 {
-    text-align: center;
-    color: #667eea;
-    margin-bottom: 30px;
-}
-
-.timer-display {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.current-exercise h3 {
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.current-exercise p {
-    font-size: 1.1rem;
-    color: #666;
-}
-
-.countdown {
-    margin: 30px 0;
-}
-
-#timer-countdown {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #667eea;
-}
-
-.timer-progress {
-    margin-top: 20px;
-}
-
-.timer-progress p {
-    color: #666;
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 10px;
-    background: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    transition: width 0.3s ease;
-    width: 0%;
-}
-
-.timer-controls {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-
-.control-btn {
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-    background: #667eea;
-    color: white;
-}
-
-.control-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-}
-
-.stop-btn {
-    grid-column: 1 / -1;
-    background: #f44336;
-}
-
-.stop-btn:hover {
-    background: #da190b;
-}
-
-/* Saved Workouts & History */
-#saved-workouts-section,
-#history-section {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    max-width: 600px;
-    width: 100%;
-    padding: 40px;
-    margin-bottom: 20px;
-}
-
-#saved-workouts-section h2,
-#history-section h2 {
-    color: #667eea;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.saved-workout-card,
-.history-card {
-    background: #f8f9ff;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    border-left: 4px solid #667eea;
-}
-
-.saved-workout-card h3,
-.history-card h3 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.saved-workout-card p,
-.history-card p {
-    color: #666;
-    font-size: 0.9rem;
-    margin: 5px 0;
-}
-
-.card-actions {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-}
-
-.card-btn {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-}
-
-.load-btn {
-    background: #667eea;
-    color: white;
-}
-
-.delete-btn {
-    background: #f44336;
-    color: white;
-}
-
-.card-btn:hover {
-    transform: translateY(-2px);
-}
-
-.clear-history-btn {
-    width: 100%;
-    padding: 12px;
-    background: #f44336;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
+.timer-title {
+    margin-bottom: 18px;
     margin-top: 10px;
-}
-
-.clear-history-btn:hover {
-    background: #da190b;
-    transform: translateY(-2px);
-}
-
-/* Footer */
-footer {
+    padding: 0 44px 0 8px;
+    font-size: 1.1rem;
+    color: #14213d;
+    font-weight: bold;
     text-align: center;
-    color: white;
-    margin-top: 20px;
-    font-size: 1rem;
-    font-weight: 300;
+    word-break: break-word;
 }
-
-/* Print Styles */
-@media print {
-    body {
-        background: white;
+.current-exercise h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: #FF9800;
+    text-align: center;
+}
+#timer-exercise-intensity {
+    font-size: 0.99rem;
+    color: #444;
+    margin-bottom: 0.6rem;
+    text-align: center;
+}
+/* --- BIGGER CIRCULAR TIMER --- */
+.circle-timer-wrap {
+    width: 160px;
+    height: 160px;
+    margin: 24px auto 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.timer-svg {
+    width: 160px;
+    height: 160px;
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 2;
+}
+#progress-circle {
+    stroke-dasharray: 427.256; /* 2 * pi * 68 */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.5s linear;
+}
+.timer-count-center {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 3;
+}
+.timer-countdown {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #14213D;
+    text-align: center;
+    letter-spacing: 1.7px;
+    width: 140px;
+    background: none;
+}
+.timer-progress {
+    margin: 0 auto 10px auto;
+    text-align: center;
+    font-size: 1.02rem;
+    color: #36454F;
+    font-weight: 600;
+}
+.timer-controls {
+    margin-top: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+.timer-controls .control-btn {
+    background: #FF9800;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 12px 0;
+    width: 190px;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(255,152,0,0.09);
+    transition: background 0.2s;
+}
+.timer-controls .skip-btn {
+    background: #4AB0FF;
+}
+.timer-controls .control-btn:hover {
+    background: #14213D;
+    color: #FF9800;
+}
+.timer-controls .skip-btn:hover {
+    background: #14213D;
+    color: #4AB0FF;
+}
+.workout-step {
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #F2F6FA;
+}
+.workout-step:last-child {
+    border-bottom: none;
+}
+.workout-step h3 {
+    font-size: 1.07rem;
+    font-weight: 700;
+    margin: 0 0 3px 0;
+    color: #14213D;
+    text-align: left;
+}
+.workout-step .meta {
+    font-size: 0.98rem;
+    color: #333;
+    margin-bottom: 2px;
+}
+.workout-step .desc {
+    font-size: 0.96rem;
+    font-style: italic;
+    color: #666;
+    margin-top: 2px;
+    margin-bottom: 7px;
+}
+.compact-btn-group {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 7px;
+}
+.remove-btn, .replace-btn {
+    background: #FF9800;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.99rem;
+    font-weight: 700;
+    padding: 9px 0;
+    width: 105px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 1px 7px rgba(255,152,0,0.10);
+    transition: background 0.2s;
+    margin-right: 0;
+}
+.remove-btn:hover, .replace-btn:hover {
+    background: #14213D;
+    color: #FF9800;
+}
+.workout-display { padding-top: 18px; padding-bottom: 18px; }
+.action-buttons button { font-size: 0.97rem; border-radius: 10px; padding: 12px 0; }
+/* Responsive for modal/timer */
+@media (max-width: 700px) {
+    .container {
+        max-width: 98vw;
+        padding: 18px 7px 18px 7px;
+    }
+    h1 { font-size: 1.3rem; }
+}
+@media (max-width: 500px) {
+    .modal-content.timer-container {
+        min-width: 95vw;
+        max-width: 99vw;
+        padding: 15px 1vw 13px 1vw;
+    }
+    .circle-timer-wrap, .timer-svg {
+        width: 92vw;
+        height: 92vw;
+        min-width: 130px;
+        min-height: 130px;
+        max-width: 98vw;
+        max-height: 98vw;
+    }
+    .timer-count-center, .timer-countdown {
+        width: 92vw;
+        height: 92vw;
+        min-width: 120px;
+        min-height: 120px;
+        font-size: 1.8rem;
         padding: 0;
     }
-    
-    .generator-section,
-    .action-buttons,
-    footer {
-        display: none;
-    }
-    
-    .container {
-        box-shadow: none;
-        max-width: 100%;
+    .timer-controls .control-btn {
+        width: 99vw;
+        max-width: 99vw;
+        font-size: 1rem;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
-
-/* Responsive design */
-@media (max-width: 600px) {
-    .container {
-        padding: 25px;
-    }
-    
-    header h1 {
-        font-size: 2rem;
-    }
-    
-    .subtitle {
-        font-size: 1rem;
-    }
-    
-    .action-buttons {
-        grid-template-columns: 1fr;
-    }
-    
-    #timer-countdown {
-        font-size: 3rem;
-    }
+.success {
+    background: #39FF14;
+    color: #14213D;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 9px 0;
+    text-align: center;
+}
+.alert {
+    background: #FF5252;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 9px 0;
+    text-align: center;
+}
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #888;
+    font-size: 1rem;
 }

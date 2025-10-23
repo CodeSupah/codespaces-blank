@@ -95,13 +95,13 @@ const gymExercises = [
     { name: "Leg Press", duration: "40 seconds", intensity: "High" }
 ];
 
-// Global variables
 let currentWorkout = null;
 let timerInterval = null;
 let currentExerciseIndex = 0;
 let remainingTime = 0;
 let isPaused = false;
 let pendingReplaceIndex = null;
+let timerTotal = 0;
 
 function generateWorkout() {
     const fitnessLevel = document.getElementById('fitness-level').value;
@@ -152,8 +152,6 @@ function generateWorkout() {
         date: new Date().toISOString()
     };
     displayWorkout(workout, fitnessLevel, duration, focus, workoutType, rounds, ropeType);
-    loadSavedWorkouts();
-    loadHistory();
 }
 
 function formatWorkoutType(type) {
@@ -162,12 +160,10 @@ function formatWorkoutType(type) {
     if (type === "gym") return "Jump Rope + Equipment (Gym)";
     return "";
 }
-
 function parseDuration(duration) {
     const seconds = parseInt(duration.split(' ')[0]);
     return seconds;
 }
-
 function displayWorkout(workout, level, duration, focus, type, rounds, ropeType) {
     const workoutDisplay = document.getElementById('workout-display');
     const workoutContent = document.getElementById('workout-content');
@@ -190,21 +186,21 @@ function displayWorkout(workout, level, duration, focus, type, rounds, ropeType)
     workout.forEach((exercise, index) => {
         if (exercise.round > currentRound) {
             currentRound = exercise.round;
-            workoutHTML += `<div style="margin: 20px 0; text-align: center; font-weight: 600; color: #764ba2;">--- Round ${currentRound} ---</div>`;
+            workoutHTML += `<div style="margin: 14px 0 10px 0; text-align: center; font-weight: 600; color: #764ba2;">--- Round ${currentRound} ---</div>`;
         }
-        const itemClass = exercise.name === "Rest" ? "workout-item rest-item" : "workout-item";
+        const isRest = exercise.name === "Rest";
         workoutHTML += `
-            <div class="${itemClass}" id="exercise-${index}">
-                <h3>${index + 1}. ${exercise.name}</h3>
-                <p><strong>Duration:</strong> ${exercise.duration}</p>
-                <p><strong>Intensity:</strong> ${exercise.intensity}</p>
-                ${exercise.description ? `<p><em>${exercise.description}</em></p>` : ""}
-                ${exercise.name !== "Rest" ? `
-                <div style="margin-top: 8px;">
-                    <button onclick="removeExercise(${index})" style="margin-right:8px;">🗑️ Remove</button>
-                    <button onclick="openReplaceModal(${index}, '${type}')" style="margin-right:8px;">🔄 Replace</button>
-                </div>
+            <div class="workout-step" id="exercise-${index}">
+                ${!isRest ? `
+                    <div class="compact-btn-group">
+                        <button class="remove-btn" onclick="removeExercise(${index})">Remove</button>
+                        <button class="replace-btn" onclick="openReplaceModal(${index}, '${type}')">Replace</button>
+                    </div>
                 ` : ""}
+                <h3>${index + 1}. ${exercise.name}</h3>
+                <div class="meta"><strong>Duration:</strong> ${exercise.duration}</div>
+                <div class="meta"><strong>Intensity:</strong> ${exercise.intensity}</div>
+                ${exercise.description ? `<div class="desc">${exercise.description}</div>` : ""}
             </div>
         `;
     });
@@ -214,7 +210,6 @@ function displayWorkout(workout, level, duration, focus, type, rounds, ropeType)
     workoutDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// --- Replace Modal Logic ---
 function openReplaceModal(index, type) {
     pendingReplaceIndex = index;
     const original = currentWorkout.exercises[index];
@@ -266,7 +261,6 @@ function confirmReplaceExercise() {
     );
 }
 
-// Remove exercise by index
 function removeExercise(index) {
     if (!currentWorkout) return;
     currentWorkout.exercises.splice(index, 1);
@@ -295,7 +289,7 @@ function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// --- Timer Functions ---
+// -------- Timer Modal + Circular Progress --------
 function startTimer() {
     if (!currentWorkout) return;
     document.getElementById('timer-modal').style.display = 'flex';
@@ -303,9 +297,10 @@ function startTimer() {
     isPaused = false;
     document.getElementById('total-exercises').textContent = currentWorkout.exercises.length;
     document.getElementById('timer-title').textContent =
-        `${capitalize(currentWorkout.level)} ${capitalize(currentWorkout.focus)} - ${formatWorkoutType(currentWorkout.workoutType)} (${currentWorkout.ropeType})`;
+        `${capitalize(currentWorkout.level)} ${capitalize(currentWorkout.focus)} – ${formatWorkoutType(currentWorkout.workoutType)} (${currentWorkout.ropeType})`;
     startExercise();
 }
+
 function startExercise() {
     if (currentExerciseIndex >= currentWorkout.exercises.length) {
         completeWorkout();
@@ -313,16 +308,21 @@ function startExercise() {
     }
     const exercise = currentWorkout.exercises[currentExerciseIndex];
     remainingTime = parseDuration(exercise.duration);
+    timerTotal = remainingTime;
     document.getElementById('timer-exercise-name').textContent = exercise.name;
-    document.getElementById('timer-exercise-intensity').textContent = `Intensity: ${exercise.intensity}` + (exercise.description ? ` | ${exercise.description}` : "");
+    document.getElementById('timer-exercise-intensity').innerHTML =
+        `<span style="font-weight:bold;">Intensity:</span> ${exercise.intensity}` +
+        (exercise.description ? `<br><span style="font-style:italic;">${exercise.description}</span>` : "");
     document.getElementById('current-exercise-num').textContent = currentExerciseIndex + 1;
-    updateProgressBar();
+    document.getElementById('total-exercises').textContent = currentWorkout.exercises.length;
     updateTimerDisplay();
+    updateCircleProgress(remainingTime, timerTotal);
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         if (!isPaused) {
             remainingTime--;
             updateTimerDisplay();
+            updateCircleProgress(remainingTime, timerTotal);
             if (remainingTime <= 0) {
                 clearInterval(timerInterval);
                 currentExerciseIndex++;
@@ -331,16 +331,25 @@ function startExercise() {
         }
     }, 1000);
 }
+
+function updateCircleProgress(timeLeft, totalTime) {
+    const circle = document.getElementById('progress-circle');
+    if (!circle) return;
+    const radius = 68; // MATCH THE NEW RADUIS
+    const circumference = 2 * Math.PI * radius;
+    const percent = (totalTime === 0) ? 0 : (timeLeft / totalTime);
+    const offset = circumference * (1 - percent);
+    circle.style.strokeDasharray = `${circumference}`;
+    circle.style.strokeDashoffset = `${offset}`;
+}
+
 function updateTimerDisplay() {
     const minutes = Math.floor(remainingTime / 60);
     const seconds = remainingTime % 60;
     document.getElementById('timer-countdown').textContent = 
         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
-function updateProgressBar() {
-    const progress = ((currentExerciseIndex) / currentWorkout.exercises.length) * 100;
-    document.getElementById('progress-fill').style.width = progress + '%';
-}
+
 function pauseTimer() { isPaused = true; }
 function resumeTimer() { isPaused = false; }
 function skipExercise() {
@@ -360,18 +369,15 @@ function closeTimer() {
 }
 function completeWorkout() {
     clearInterval(timerInterval);
-    document.getElementById('timer-exercise-name').textContent = "Workout Complete! 🎉";
+    document.getElementById('timer-exercise-name').textContent = "Workout Complete!";
     document.getElementById('timer-exercise-intensity').textContent = "Great job!";
     document.getElementById('timer-countdown').textContent = "00:00";
-    updateProgressBar();
-    saveToHistory();
+    updateCircleProgress(0, 1);
     setTimeout(() => {
         closeTimer();
     }, 3000);
 }
 
-// --- Save/History/Print functions unchanged as before ---
 window.addEventListener('load', () => {
-    loadSavedWorkouts();
-    loadHistory();
+    // Optional save/load logic can go here.
 });
